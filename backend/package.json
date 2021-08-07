@@ -8,7 +8,7 @@
 		"start": "node index.js",
 		"server": "nodemon index.js",
 		"up": "knex migrate:up",
-		"latest": "knex migrate:latest",
+		"migrate": "knex migrate:latest",
 		"down": "knex migrate:down",
 		"rollback": "knex migrate:rollback",
 		"seed": "knex seed:run",

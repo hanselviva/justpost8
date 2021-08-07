@@ -15,9 +15,9 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use("/auth", authRouter);
-server.use("/admin", adminRouter);
 server.use("/posts", postsRouter);
+server.use("/auth", authRouter);
+server.use("/admin-access", adminRouter); //users and posts info
 
 //root
 server.get("/", (req, res) => {

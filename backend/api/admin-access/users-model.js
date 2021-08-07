@@ -31,18 +31,17 @@ const add = async (newUser) => {
 
 const update = async (user_id, user) => {
 	const idOfUser = await db("users").where({ user_id }).update(user);
-
 	const updatedUser = await getById(user_id);
 	return updatedUser;
 };
 
 const remove = async (user_id) => {
-	const toRemove = await db("users").where({ user_id }).del();
 	const removed = await getById(user_id);
+	const toRemove = await db("users").where({ user_id }).del();
 	return removed;
 };
 
-module.export = {
+module.exports = {
 	getAll,
 	getBy,
 	getById,

@@ -12,7 +12,6 @@ exports.up = function (knex) {
 				.integer("role_id")
 				.defaultTo(2)
 				.unsigned()
-				.notNullable()
 				.references("role_id")
 				.inTable("roles")
 				.onUpdate("RESTRICT")

@@ -1,0 +1,13 @@
+.App {
+	text-align: center;
+	min-height: 99vh;
+	display: flex;
+	flex-flow: column nowrap;
+}
+a {
+	text-decoration: none;
+}
+
+.app-content {
+	flex: 1 1 auto;
+}

@@ -24,9 +24,9 @@ router.get("/get-users/:id", validateId, (req, res, next) => {
 
 router.delete(
 	"/:id",
-	validateId,
 	restricted,
 	only("admin"),
+	validateId,
 	(req, res, next) => {
 		const { id } = req.params;
 		Users.remove(id)

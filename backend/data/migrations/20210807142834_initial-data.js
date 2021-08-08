@@ -21,7 +21,7 @@ exports.up = function (knex) {
 			posts.increments("post_id");
 			posts.string("post_title").notNullable();
 			posts.string("post_body").notNullable();
-			posts.date("posted_at").notNullable();
+			posts.timestamp("posted_at").defaultTo(knex.fn.now());
 			posts
 				.integer("user_id")
 				.unsigned()

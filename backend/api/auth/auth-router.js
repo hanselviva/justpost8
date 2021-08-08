@@ -5,7 +5,7 @@ const Users = require("../admin-access/users-model");
 const bcrypt = require("bcryptjs");
 const tokenBuilder = require("./token-builder");
 
-const Middleware = require("./auth-middleware"); //! NOT INTEGRATED YET
+const Middleware = require("./auth-middleware");
 
 router.post(
 	"/register",
@@ -20,10 +20,7 @@ router.post(
 		//add user to db
 		Users.add(credentials)
 			.then((newUser) => {
-				res.status(201).json({
-					message: `Welcome, ${credentials.username}`,
-					user: newUser,
-				});
+				res.status(201).json(newUser);
 			})
 			.catch(next);
 	},

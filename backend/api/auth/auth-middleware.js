@@ -39,7 +39,7 @@ const checkUsernameExists = async (req, res, next) => {
 	if (userFound) {
 		next();
 	} else {
-		res.status(401).json({ message: "Username doesn't exist" });
+		res.status(401).json({ message: "Username doesn't exist." });
 	}
 };
 
@@ -47,7 +47,7 @@ const checkUsernameAvailable = async (req, res, next) => {
 	const username = req.body.username;
 	const [userFound] = await Users.getBy({ username: username });
 	if (userFound) {
-		res.status(401).json({ message: "Username already taken" });
+		res.status(401).json({ message: "Username already taken." });
 	} else {
 		next();
 	}
@@ -62,6 +62,8 @@ const validateBody = async (req, res, next) => {
 		res.status(400).json({ message: "Username required." });
 	} else if (!body.password) {
 		res.status(400).json({ message: "Password required." });
+	} else if (typeof body.password !== "string") {
+		res.status(400).json({ message: "Password should be alphanumeric." });
 	} else {
 		req.body.username = body.username.trim();
 		req.body.password = body.password.trim();

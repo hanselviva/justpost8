@@ -33,14 +33,51 @@ const only = (role_name) => (req, res, next) => {
 	}
 };
 
-const checkUsernameExists = (req, res, next) => {
+const checkUsernameExists = async (req, res, next) => {
 	const username = req.body.username;
-	Users.getBy({ username })
-		.then((userFound) => {
-			if (userFound) {
-				next();
+	const [userFound] = await Users.getBy({ username: username });
+	if (userFound) {
+		next();
+	} else {
+		res.status(401).json({ message: "Username doesn't exist" });
+	}
+};
+
+const checkUsernameAvailable = async (req, res, next) => {
+	const username = req.body.username;
+	const [userFound] = await Users.getBy({ username: username });
+	if (userFound) {
+		res.status(401).json({ message: "Username already taken" });
+	} else {
+		next();
+	}
+};
+
+const validateBody = async (req, res, next) => {
+	const body = req.body;
+
+	if (!body || Object.keys(body).length === 0) {
+		res.status(400).json({ message: "Missing required text fields." });
+	} else if (!body.username) {
+		res.status(400).json({ message: "Username required." });
+	} else if (!body.password) {
+		res.status(400).json({ message: "Password required." });
+	} else {
+		req.body.username = body.username.trim();
+		req.body.password = body.password.trim();
+		next();
+	}
+};
+
+//id validator:
+const validateId = async (req, res, next) => {
+	const { id } = req.params;
+	Users.getById(id)
+		.then((user) => {
+			if (user.length === 0) {
+				res.status(404).json({ message: "User with that ID not found." });
 			} else {
-				res.status(401).json({ message: "Username doesn't exist" });
+				next();
 			}
 		})
 		.catch(next);
@@ -50,4 +87,7 @@ module.exports = {
 	restricted,
 	only,
 	checkUsernameExists,
+	checkUsernameAvailable,
+	validateBody,
+	validateId,
 };

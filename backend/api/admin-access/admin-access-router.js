@@ -3,7 +3,7 @@
 const router = require("express").Router();
 const Users = require("./users-model");
 const Posts = require("../posts/posts-model");
-const { restricted, only } = require("../auth/auth-middleware");
+const { restricted, only, validateId } = require("../auth/auth-middleware");
 
 router.get("/get-users", restricted, only("admin"), (req, res, next) => {
 	Users.getAll()
@@ -13,7 +13,7 @@ router.get("/get-users", restricted, only("admin"), (req, res, next) => {
 		.catch(next);
 });
 
-router.get("/get-users/:id", (req, res, next) => {
+router.get("/get-users/:id", validateId, (req, res, next) => {
 	const { id } = req.params;
 	Users.getById(id)
 		.then((user) => {
@@ -22,16 +22,22 @@ router.get("/get-users/:id", (req, res, next) => {
 		.catch(next);
 });
 
-router.delete("/:id", (req, res, next) => {
-	const { id } = req.params;
-	Users.remove(id)
-		.then((removedUser) => {
-			res
-				.status(200)
-				.json({ message: "Successfully removed.", removed: removedUser });
-		})
-		.catch(next);
-});
+router.delete(
+	"/:id",
+	validateId,
+	restricted,
+	only("admin"),
+	(req, res, next) => {
+		const { id } = req.params;
+		Users.remove(id)
+			.then((removedUser) => {
+				res
+					.status(200)
+					.json({ message: "Successfully removed.", removed: removedUser });
+			})
+			.catch(next);
+	},
+);
 
 //error handler:
 router.use((err, req, res, next) => {

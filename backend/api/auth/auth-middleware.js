@@ -6,19 +6,19 @@ const Users = require("../admin-access/users-model");
 const secret = process.env.JWT_SECRET || "fallback";
 
 const restricted = (req, res, next) => {
-	const token = req.header.authorization;
+	const token = req.headers.authorization?.split(" ")[1];
 
-	if (token) {
+	if (!token) {
+		res.status(401).json({ message: "Token required." });
+	} else {
 		jwt.verify(token, secret, (err, decodedToken) => {
 			if (err) {
 				res.status(401).json({ message: err });
 			} else {
 				req.decodedToken = decodedToken;
-				next;
+				next();
 			}
 		});
-	} else {
-		res.status(401).json({ message: "Token required." });
 	}
 };
 
@@ -27,7 +27,9 @@ const only = (role_name) => (req, res, next) => {
 	if (decodedRole === role_name) {
 		next();
 	} else {
-		res.status(403).json({ message: "This is not for you" });
+		res
+			.status(403)
+			.json({ message: "Only admins have access to this information." });
 	}
 };
 

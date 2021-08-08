@@ -2,10 +2,16 @@
 
 const router = require("express").Router();
 const Users = require("../admin-access/users-model");
+const bcrypt = require("bcryptjs");
+const tokenBuilder = require("./token-builder");
+
 const Middleware = require("./auth-middleware"); //! NOT INTEGRATED YET
 
 router.post("/register", async (req, res, next) => {
 	const credentials = req.body;
+	const rounds = process.env.BCRYPT_ROUNDS || 8;
+	const hash = bcrypt.hashSync(credentials.password, rounds);
+	credentials.password = hash;
 
 	//add user to db
 	Users.add(credentials)
@@ -15,20 +21,31 @@ router.post("/register", async (req, res, next) => {
 				user: newUser,
 			});
 		})
-		.catch((err) => {
-			res.json(err);
-		});
+		.catch(next);
 });
 
 router.post("/login", async (req, res, next) => {
-	const credentials = req.body;
-	const [user] = await Users.getBy({ username: credentials.username });
+	const { username, password } = req.body;
+	const [user] = await Users.getBy({ username: username });
 
-	res.status(200).json(user);
+	if (user && !bcrypt.compareSync(password, user.password)) {
+		res.status(401).json({ message: "Incorrect password" });
+	} else if (user && bcrypt.compareSync(password, user.password)) {
+		const token = tokenBuilder(user);
+		res.json({
+			user,
+			token,
+		});
+	} else {
+		next();
+	}
 });
 
 router.post("/admin-register", async (req, res, next) => {
-	let credentials = req.body;
+	const credentials = req.body;
+	const rounds = process.env.BCRYPT_ROUNDS || 8;
+	const hash = bcrypt.hashSync(credentials.password, rounds);
+	credentials.password = hash;
 	credentials.role_id = 1;
 
 	Users.add(credentials)

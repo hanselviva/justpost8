@@ -19,6 +19,15 @@ server.use("/posts", postsRouter);
 server.use("/auth", authRouter);
 server.use("/admin-access", adminRouter); //users and posts info
 
+// catch all
+server.use("*", (req, res) => {
+	res
+		.status(404)
+		.send(
+			`<h2> oops! that place doesn't exist! Read docs for more info. </h2>`,
+		);
+});
+
 //root
 server.get("/", (req, res) => {
 	res.send(`<h2> Welcome to my API Homepage! </h2>`);

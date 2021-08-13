@@ -19,5 +19,5 @@ module.exports = {
 	},
 	testing: {},
 	staging: {},
-	production: { client: "pg" },
+	production: { client: "sqlite3" },
 };

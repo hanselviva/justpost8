@@ -20,6 +20,11 @@ server.use("/posts", postsRouter);
 server.use("/auth", authRouter);
 server.use("/admin-access", adminRouter); //users and posts info
 
+//root
+server.get("/", (req, res) => {
+	res.send(`<h2> Welcome to my API Homepage! </h2>`);
+});
+
 // catch all
 server.use("*", (req, res) => {
 	res
@@ -29,12 +34,7 @@ server.use("*", (req, res) => {
 		);
 });
 
-//root
-server.get("/", (req, res) => {
-	res.send(`<h2> Welcome to my API Homepage! </h2>`);
-});
-
-//catch all
+//error
 server.use((err, req, res, next) => {
 	res.status(err.status || 500).json({
 		message: err.message,

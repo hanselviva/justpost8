@@ -19,8 +19,8 @@ exports.up = function (knex) {
 		})
 		.createTable("posts", (posts) => {
 			posts.increments("post_id");
-			posts.string("post_title").notNullable();
-			posts.string("post_body").notNullable();
+			posts.text("post_title").notNullable();
+			posts.text("post_body").notNullable();
 			posts.timestamp("posted_at").defaultTo(knex.fn.now());
 			posts
 				.integer("user_id")

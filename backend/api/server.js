@@ -7,7 +7,7 @@ const morgan = require("morgan");
 
 const authRouter = require("./routers/auth-router");
 const adminRouter = require("./routers/admin-access-router.js");
-const postsRouter = require("./router/posts-router.js");
+const postsRouter = require("./routers/posts-router.js");
 
 const server = express();
 server.use(morgan("dev"));

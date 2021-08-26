@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 const jwt = require("jsonwebtoken");
-const Users = require("../admin-access/users-model");
+const Users = require("../models/users-model");
 
 const secret = process.env.JWT_SECRET || "fallback";
 

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 
 const router = require("express").Router();
-const Users = require("../admin-access/users-model");
+const Users = require("../models/users-model");
 const bcrypt = require("bcryptjs");
-const tokenBuilder = require("./token-builder");
+const tokenBuilder = require("../utils/token-builder");
 
-const Middleware = require("./auth-middleware");
+const Middleware = require("../middlewares/auth-middleware");
 
 router.post(
 	"/register",

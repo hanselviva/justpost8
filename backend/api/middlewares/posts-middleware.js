@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const Posts = require("./posts-model");
+const Posts = require("../models/posts-model");
 
 const validateBody = async (req, res, next) => {
 	const body = req.body;

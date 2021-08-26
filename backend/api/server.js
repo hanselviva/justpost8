@@ -5,9 +5,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 
-const authRouter = require("./auth/auth-router.js");
-const adminRouter = require("./admin-access/admin-access-router.js");
-const postsRouter = require("./posts/posts-router.js");
+const authRouter = require("./routers/auth-router");
+const adminRouter = require("./routers/admin-access-router.js");
+const postsRouter = require("./router/posts-router.js");
 
 const server = express();
 server.use(morgan("dev"));

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 const router = require("express").Router();
-const Posts = require("./posts-model");
-const Middleware = require("./posts-middleware");
-const { restricted } = require("../auth/auth-middleware");
+const Posts = require("../models/posts-model");
+const Middleware = require("../middlewares/posts-middleware");
+const { restricted } = require("../middlewares/auth-middleware");
 
 router.get("/", (req, res, next) => {
 	Posts.getAll()

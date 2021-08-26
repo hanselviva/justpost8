@@ -1,9 +1,13 @@
 /* eslint-disable no-unused-vars */
 
 const router = require("express").Router();
-const Users = require("./users-model");
-const Posts = require("../posts/posts-model");
-const { restricted, only, validateId } = require("../auth/auth-middleware");
+const Users = require("../models/users-model");
+const Posts = require("../models/posts-model");
+const {
+	restricted,
+	only,
+	validateId,
+} = require("../middlewares/auth-middleware");
 
 router.get("/get-users", restricted, only("admin"), (req, res, next) => {
 	Users.getAll()

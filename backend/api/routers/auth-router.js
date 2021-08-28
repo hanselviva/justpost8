@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const tokenBuilder = require("../utils/token-builder");
 
 const Middleware = require("../middlewares/auth-middleware");
+const { validateId } = require("../middlewares/auth-middleware");
 
 router.post(
 	"/register",
@@ -68,6 +69,17 @@ router.post(
 			});
 	},
 );
+
+router.get("/users/:id", validateId, (req, res, next) => {
+	const { id } = req.params;
+	Users.getById(id)
+		.then((user) => {
+			res.status(200).json(user);
+		})
+		.catch(next);
+});
+
+//edit user profile
 
 //error handler:
 router.use((err, req, res, next) => {

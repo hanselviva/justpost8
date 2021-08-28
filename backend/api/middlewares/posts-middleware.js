@@ -9,7 +9,7 @@ const validateBody = async (req, res, next) => {
 	} else if (!body.post_title) {
 		res.status(400).json({ message: "Title required." });
 	} else if (!body.post_body) {
-		res.status(400).json({ message: "Post content required." });
+		res.status(400).json({ message: "Post text required." });
 	} else if (!body.user_id) {
 		res.status(400).json({ message: "OP required." });
 	} else {

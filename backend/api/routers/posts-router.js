@@ -22,14 +22,19 @@ router.get("/:id", Middleware.validateId, (req, res, next) => {
 		.catch(next);
 });
 
-router.post("/", restricted, Middleware.validateBody, (req, res, next) => {
-	const body = req.body;
-	Posts.add(body)
-		.then((newPost) => {
-			res.status(201).json(newPost);
-		})
-		.catch(next);
-});
+router.post(
+	"/create",
+	restricted,
+	Middleware.validateBody,
+	(req, res, next) => {
+		const body = req.body;
+		Posts.add(body)
+			.then((newPost) => {
+				res.status(201).json(newPost);
+			})
+			.catch(next);
+	},
+);
 
 router.put(
 	"/:id",
@@ -57,5 +62,7 @@ router.delete("/:id", restricted, Middleware.validateId, (req, res, next) => {
 		})
 		.catch(next);
 });
+
+//need to add all posts by user
 
 module.exports = router;

@@ -9,19 +9,10 @@ const {
 	validateId,
 } = require("../middlewares/auth-middleware");
 
-router.get("/get-users", restricted, only("admin"), (req, res, next) => {
+router.get("/users", restricted, only("admin"), (req, res, next) => {
 	Users.getAll()
 		.then((users) => {
 			res.status(200).json(users);
-		})
-		.catch(next);
-});
-
-router.get("/get-users/:id", validateId, (req, res, next) => {
-	const { id } = req.params;
-	Users.getById(id)
-		.then((user) => {
-			res.status(200).json(user);
 		})
 		.catch(next);
 });

@@ -17,7 +17,7 @@ export const initialState = {
 	isLoading: false,
 	isLoggedIn: false,
 	user: null,
-	posts: null,
+	// posts: null,
 	fetchError: null,
 };
 

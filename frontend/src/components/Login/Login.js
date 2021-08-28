@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+
 const Login = () => {
 	return (
 		<div className="login-wrapper">
@@ -20,4 +22,11 @@ const Login = () => {
 	);
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+	isLoading: state.isLoading,
+	isLoggedIn: state.isLoggedIn,
+	user: state.user,
+	fetchError: state.fetchError,
+});
+
+export default connect(mapStateToProps, {})(Login);

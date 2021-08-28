@@ -7,15 +7,17 @@ import { connect } from "react-redux";
 //
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Homepage from "./components/Homepage/Homepage";
+// import Homepage from "./components/Homepage/Homepage";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Posts from "./components/Posts/Posts";
 import AdminPage from "./components/AdminPage/AdminPage";
 
-const App = () => {
+const App = (props) => {
 	return (
 		<div className="App">
+			{props.isLoading === true && <div> loading </div>}
+
 			<Header />
 			<div className="app-content">
 				<Switch>
@@ -32,11 +34,10 @@ const App = () => {
 };
 
 const mapStateToProps = (state) => ({
-	// isLoading: state.isLoading,
-	// isLoggedIn: state.isLoggedIn,
-	// user: state.user,
-	//posts: state.posts,
-	// fetchError: state.fetchError,
+	isLoading: state.isLoading,
+	isLoggedIn: state.isLoggedIn,
+	user: state.user,
+	fetchError: state.fetchError,
 });
 
 export default connect(mapStateToProps, {})(App);

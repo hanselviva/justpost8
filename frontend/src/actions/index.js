@@ -12,13 +12,22 @@ export const LOGOUT = "LOGOUT";
 export const FETCH_ERROR = "FETCH_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
-export const register = () => (dispatch) => {
+export const register = (credentials) => (dispatch) => {
 	dispatch({
 		type: START_FETCHING,
 	});
 	axiosWithAuth()
-		.post()
-		.then.catch((err) => {
+		.post("https://justpost8-api.herokuapp.com/auth/register", credentials)
+		.then((res) => {
+			console.log("register post response:", res);
+			localStorage.setItem("token", res.data.token);
+			localStorage.setItem("user_id", res.data.user_id);
+			dispatch({
+				type: REGISTER,
+				payload: res.data,
+			});
+		})
+		.catch((err) => {
 			dispatch({
 				type: FETCH_ERROR,
 				payload: err,

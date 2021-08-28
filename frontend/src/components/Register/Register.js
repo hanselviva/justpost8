@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../actions/index";
 
-const Register = () => {
+const Register = (props) => {
 	const [formValues, setFormValues] = useState({
 		username: "",
 		password: "",
@@ -20,16 +20,14 @@ const Register = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await function () {
-			register(formValues);
-		};
-		history.push("/posts");
+		props.register(formValues, history);
+		console.log("formValues:", formValues);
 	};
 
 	return (
 		<div className="register">
 			Register form here
-			<form className="login-form">
+			<form className="register-form" onSubmit={handleSubmit}>
 				<label>
 					Username:
 					<input
@@ -50,7 +48,7 @@ const Register = () => {
 					/>
 				</label>
 				<br />
-				<button onClick={handleSubmit}>Register</button>
+				<button type="submit">Register</button>
 			</form>
 		</div>
 	);

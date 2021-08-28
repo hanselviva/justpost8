@@ -17,13 +17,12 @@ export const initialState = {
 	isLoading: false,
 	isLoggedIn: false,
 	user: null,
-	// posts: null,
-	fetchError: null,
+	dbError: null,
 };
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case REGISTER:
+		case REGISTER: //done
 			return {
 				...state,
 				user: action.payload,
@@ -32,9 +31,10 @@ export const reducer = (state = initialState, action) => {
 		case LOGIN:
 			return {
 				...state,
+				user: action.payload,
 				isLoggedIn: true,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case START_FETCHING:
 			return {
@@ -46,48 +46,48 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case FETCHING_POSTS_SUCCESS:
 			return {
 				...state,
 				posts: action.payload,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case CREATE_POST_SUCCESS:
 			return {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case UPDATE_POST_SUCCESS:
 			return {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case DELETE_POST_SUCCESS:
 			return {
 				...state,
 				user: action.payload,
 				isLoading: false,
-				fetchError: null,
+				dbError: null,
 			};
 		case LOGOUT:
 			return initialState;
 		case FETCH_ERROR:
 			return {
 				...state,
-				fetchError: action.payload,
+				dbError: action.payload,
 				isLoading: false,
 			};
 		case CLEAR_ERROR:
 			return {
 				...state,
-				fetchError: false,
+				dbError: false,
 			};
 		default:
 			return state;

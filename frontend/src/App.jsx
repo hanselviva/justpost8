@@ -3,7 +3,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 //
 import { connect } from "react-redux";
-
+import PrivateRoute from "./utils/PrivateRoute";
 //
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -12,11 +12,13 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Posts from "./components/Posts/Posts";
 import AdminPage from "./components/AdminPage/AdminPage";
+import Profile from "./components/Profile/Profile";
 
 const App = (props) => {
 	return (
 		<div className="App">
 			{props.isLoading === true && <div> loading </div>}
+			{props.dbError && <h1> {props.dbError}</h1>}
 
 			<Header />
 			<div className="app-content">
@@ -25,6 +27,7 @@ const App = (props) => {
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 					<Route path="/posts" component={Posts} />
+					<PrivateRoute path="/profile" component={Profile} />
 					<Route path="/adminPage" component={AdminPage} />
 				</Switch>
 			</div>
@@ -36,8 +39,7 @@ const App = (props) => {
 const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
-	user: state.user,
-	fetchError: state.fetchError,
+	dbError: state.dbError,
 });
 
 export default connect(mapStateToProps, {})(App);

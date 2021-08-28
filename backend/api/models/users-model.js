@@ -23,8 +23,8 @@ const getById = (user_id) => {
 };
 
 const add = async (newUser) => {
-	const [user_id] = await db("users").insert(newUser);
-	const newlyAddedUser = await getById(user_id[0]);
+	const [user_id] = await db("users").returning("user_id").insert(newUser);
+	const newlyAddedUser = await getById(user_id);
 	return newlyAddedUser;
 };
 

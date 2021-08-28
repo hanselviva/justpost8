@@ -3,6 +3,7 @@
 	min-height: 99vh;
 	display: flex;
 	flex-flow: column nowrap;
+	background-color: #e1f5fe;
 }
 a {
 	text-decoration: none;

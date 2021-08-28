@@ -39,6 +39,7 @@ const App = (props) => {
 const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
+	user: state.user,
 	dbError: state.dbError,
 });
 

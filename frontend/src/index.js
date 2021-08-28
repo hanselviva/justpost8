@@ -9,13 +9,36 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { reducer } from "./reducers";
+//
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#e1f5fe",
+			light: "#ffffff",
+			dark: "#afc2cb",
+			// contrastText: "",
+		},
+		// secondary: {
+		// 	main: "#80deea",
+		// 	light: "#b4ffff",
+		// 	dark: "#4bacb8",
+		// 	// contrastText: "",
+		// },
+	},
+	typography: {
+		fontFamily: [" Calibri "],
+	},
+});
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
 	<Router>
 		<Provider store={store}>
-			<App />
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
 		</Provider>
 	</Router>,
 	document.getElementById("root"),

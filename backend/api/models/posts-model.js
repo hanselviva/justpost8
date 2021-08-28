@@ -2,7 +2,7 @@
 const db = require("../../data/config-db");
 
 const getAll = () => {
-	return db("posts").orderBy("posted_at");
+	return db("posts").orderBy("posted_at", "desc");
 };
 
 //get posts by user with user_id as filter
@@ -11,11 +11,11 @@ const getBy = (filter) => {
 		.select("post_id", "post_title", "post_body", "post_at", "username")
 		.join("users as u", "p.user_id", "u.user_id")
 		.where(filter)
-		.orderBy("posted_at");
+		.orderBy("posted_at", "desc");
 };
 
 const getById = (post_id) => {
-	return db("posts").where({ post_id }).orderBy("posted_at");
+	return db("posts").where({ post_id }).orderBy("posted_at", "desc");
 };
 
 const add = async (newPost) => {

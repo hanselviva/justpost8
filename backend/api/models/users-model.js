@@ -4,7 +4,8 @@ const db = require("../../data/config-db");
 const getAll = () => {
 	return db("users as u")
 		.join("roles as r", "u.role_id", "r.role_id")
-		.select("u.user_id", "u.username", "r.role_name");
+		.select("u.user_id", "u.username", "r.role_name")
+		.orderBy("u.user_id", "desc");
 };
 
 const getBy = (filter) => {
@@ -12,7 +13,7 @@ const getBy = (filter) => {
 		.join("roles as r", "u.role_id", "r.role_id")
 		.select("u.user_id", "u.username", "u.password", "r.role_name")
 		.where(filter)
-		.orderBy("user_id");
+		.orderBy("user_id", "desc");
 };
 
 const getById = (user_id) => {

@@ -4,14 +4,15 @@ import {
 	H5,
 	Card,
 	CardContent,
-	Subtitle2,
 	Body1,
 	CardAction,
 	Button,
+	Overline,
 } from "ui-neumorphism";
 import "ui-neumorphism/dist/index.css";
 import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PostCard from "./PostCard";
 
 const useStyles = makeStyles((theme) => ({
 	cardGrid: {
@@ -51,31 +52,7 @@ const Posts = () => {
 		<Container className={classes.cardGrid} maxWidth="lg">
 			<Grid container spacing={4}>
 				{posts.map((post) => {
-					return (
-						<Grid item key={post.post_id} xs={12} sm={6} md={4}>
-							<Card bordered className={classes.card}>
-								<CardContent>
-									<H5 style={{ fontFamily: "Questrial" }}>{post.post_title}</H5>
-									<Subtitle2 secondary style={{ marginBottom: "12px" }}>
-										Posted at: {convertDate(post.posted_at)} by {post.user_id}
-									</Subtitle2>
-									<Body1
-										style={{
-											marginTop: "20px",
-											fontFamily: "Sarabun",
-										}}
-									>
-										{post.post_body}
-									</Body1>
-								</CardContent>
-								<CardAction style={{ marginBottom: "20px" }}>
-									<Button text color="var(--primary)" outlined>
-										Visit profile
-									</Button>
-								</CardAction>
-							</Card>
-						</Grid>
-					);
+					return <PostCard post={post} />;
 				})}
 			</Grid>
 		</Container>

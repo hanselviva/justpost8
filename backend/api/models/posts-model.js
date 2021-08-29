@@ -2,7 +2,10 @@
 const db = require("../../data/config-db");
 
 const getAll = () => {
-	return db("posts").orderBy("posted_at", "desc");
+	return db("posts as p")
+		.select("p.*", "u.username")
+		.join("users as u", "p.user_id", "users.user_id")
+		.orderBy("posted_at", "desc");
 };
 
 //get posts by user with user_id as filter

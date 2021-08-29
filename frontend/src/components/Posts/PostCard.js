@@ -36,7 +36,7 @@ const PostCard = (props) => {
 				<CardContent>
 					<H5 style={{ fontFamily: "Questrial" }}>{post.post_title}</H5>
 					<Overline style={{ marginBottom: "12px" }}>
-						Posted by {post.user_id}
+						Posted by {post.username}
 					</Overline>
 					<Body1
 						style={{

@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+
+//
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -24,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Header = () => {
+const Header = (props) => {
+	const history = useHistory();
 	const classes = useStyles();
+	const paramsLocation = history.location.pathname;
+
 	return (
 		<div className={classes.navbar}>
 			<AppBar position="static">
@@ -48,8 +55,24 @@ const Header = () => {
 							justifyContent: "space-around",
 						}}
 					>
-						<Button>Login</Button>
-						<Button>Signup</Button>
+						{props.isLoggedIn === false && (
+							<>
+								<Button
+									onClick={() => {
+										history.push("/register");
+									}}
+								>
+									Signup
+								</Button>
+								<Button
+									onClick={() => {
+										history.push("/login");
+									}}
+								>
+									Login
+								</Button>{" "}
+							</>
+						)}
 					</div>
 				</Toolbar>
 			</AppBar>
@@ -57,4 +80,9 @@ const Header = () => {
 	);
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+	isLoading: state.isLoading,
+	isLoggedIn: state.isLoggedIn,
+	fetchError: state.fetchError,
+});
+export default connect(mapStateToProps, {})(Header);

@@ -1,14 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { register } from "../../actions/index";
+import { clearError, register } from "../../actions/index";
+
+//
+//
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import { Divider, Button } from "ui-neumorphism";
+
+const useStyles = makeStyles((theme) => ({
+	createPost: {
+		paddingBottom: theme.spacing(8),
+	},
+	paper: {
+		marginTop: theme.spacing(1),
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+	},
+	form: {
+		width: "100%", // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+	},
+}));
 
 const Register = (props) => {
+	const classes = useStyles();
 	const [formValues, setFormValues] = useState({
 		username: "",
 		password: "",
 	});
 	const history = useHistory();
+
+	useEffect(() => {
+		props.clearError();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [props.clearError]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -25,40 +59,45 @@ const Register = (props) => {
 	};
 
 	return (
-		<div className="register">
-			Register form here
-			<form className="register-form" onSubmit={handleSubmit}>
-				<label>
-					Username:
-					<input
-						type="text"
+		<Container component="main" maxWidth="sm" className={classes.createPost}>
+			<CssBaseline />
+			<div className={classes.paper}>
+				<form className={classes.form} noValidate onSubmit={handleSubmit}>
+					<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						label="username"
 						name="username"
 						value={formValues.username}
 						onChange={handleChange}
 					/>
-				</label>
-				<br />
-				<label>
-					Password:
-					<input
-						type="text" //need to change to password
+					<Divider elevated={true} />
+					<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
 						name="password"
+						label="password"
+						type="password"
 						value={formValues.password}
 						onChange={handleChange}
 					/>
-				</label>
-				<br />
-				<button type="submit">Register</button>
-			</form>
-		</div>
+					<Divider elevated={true} />
+					<Button bordered className={classes.submit}>
+						<VpnKeyOutlinedIcon style={{ marginRight: "10px" }} />
+						Register
+					</Button>
+				</form>
+			</div>
+		</Container>
 	);
 };
-
 const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
-	user: state.user,
 	fetchError: state.fetchError,
 });
-
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register, clearError })(Register);

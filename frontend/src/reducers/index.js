@@ -10,6 +10,7 @@ import {
 	DELETE_POST_SUCCESS,
 	LOGOUT,
 	FETCH_ERROR,
+	FETCH_ALERT,
 	CLEAR_ERROR,
 } from "../actions";
 
@@ -18,6 +19,7 @@ export const initialState = {
 	isLoggedIn: false,
 	user: null,
 	dbError: null,
+	dbAlert: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -78,6 +80,12 @@ export const reducer = (state = initialState, action) => {
 			};
 		case LOGOUT:
 			return initialState;
+		case FETCH_ALERT:
+			return {
+				...state,
+				dbAlert: action.payload,
+				isLoading: false,
+			};
 		case FETCH_ERROR:
 			return {
 				...state,

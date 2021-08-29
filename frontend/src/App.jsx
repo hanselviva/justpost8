@@ -17,10 +17,10 @@ import Profile from "./components/Profile/Profile";
 const App = (props) => {
 	return (
 		<div className="App">
-			{props.isLoading === true && <div> loading </div>}
-			{props.dbError && <h1> {props.dbError}</h1>}
-
 			<Header />
+			{props.isLoading === true && <h2> loading... </h2>}
+			{props.dbError && <h2> {props.dbError}</h2>}
+			{props.dbAlert && <h2> {props.dbAlert}</h2>}
 			<div className="app-content">
 				<Switch>
 					<Route exact path="/" component={Posts} />
@@ -31,6 +31,7 @@ const App = (props) => {
 					<Route path="/adminPage" component={AdminPage} />
 				</Switch>
 			</div>
+
 			<Footer />
 		</div>
 	);
@@ -39,8 +40,8 @@ const App = (props) => {
 const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
-	user: state.user,
 	dbError: state.dbError,
+	dbAlert: state.dbAlert,
 });
 
 export default connect(mapStateToProps, {})(App);

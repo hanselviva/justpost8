@@ -10,6 +10,7 @@ export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
 export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const LOGOUT = "LOGOUT";
 export const FETCH_ERROR = "FETCH_ERROR";
+export const FETCH_ALERT = "FETCH_ALERT";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
 export const register = (credentials, history) => (dispatch) => {
@@ -25,11 +26,15 @@ export const register = (credentials, history) => (dispatch) => {
 				payload: res.data,
 			});
 			history.push("/login");
+			dispatch({
+				type: FETCH_ALERT,
+				payload: "success! user created. please login to continue.",
+			});
 		})
 		.catch((err) => {
 			dispatch({
 				type: FETCH_ERROR,
-				payload: err,
+				payload: err.response.data.message,
 			});
 		});
 

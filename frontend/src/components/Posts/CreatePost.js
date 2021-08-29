@@ -41,9 +41,7 @@ const CreatePost = () => {
 						required
 						fullWidth
 						label="Title"
-						name="email"
-						autoComplete="email"
-						autoFocus
+						name="post_title"
 					/>
 					<Divider elevated={true} />
 					<TextField
@@ -51,9 +49,8 @@ const CreatePost = () => {
 						margin="normal"
 						required
 						fullWidth
-						name="password"
+						name="post_body"
 						label="What do you want to say?"
-						type="password"
 						multiline={true}
 						rows={5}
 					/>

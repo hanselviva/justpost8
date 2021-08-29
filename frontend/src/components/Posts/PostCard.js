@@ -36,7 +36,7 @@ const PostCard = (props) => {
 				<CardContent>
 					<H5 style={{ fontFamily: "Questrial" }}>{post.post_title}</H5>
 					<Overline style={{ marginBottom: "12px" }}>
-						Posted at: {convertDate(post.posted_at)} by {post.user_id}
+						Posted by {post.user_id}
 					</Overline>
 					<Body1
 						style={{
@@ -48,9 +48,12 @@ const PostCard = (props) => {
 					</Body1>
 				</CardContent>
 				<CardAction style={{ marginBottom: "20px" }}>
-					<Button text color="var(--primary)" outlined>
+					{/* <Button text color="var(--primary)" outlined>
 						Visit profile
-					</Button>
+					</Button> */}
+					<Overline style={{ marginBottom: "12px" }}>
+						Posted at {convertDate(post.posted_at)}
+					</Overline>
 				</CardAction>
 			</Card>
 		</Grid>

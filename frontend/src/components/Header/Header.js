@@ -1,19 +1,16 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
+
+//neu import
+import { Button } from "ui-neumorphism";
+import "ui-neumorphism/dist/index.css";
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
 		flexGrow: 1,
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
 	},
 	toolbar: {
 		minHeight: 128,
@@ -33,27 +30,27 @@ const Header = () => {
 		<div className={classes.navbar}>
 			<AppBar position="static">
 				<Toolbar className={classes.toolbar}>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="open drawer"
+					<Typography
+						className={classes.title}
+						variant="h1"
+						noWrap
+						style={{ fontFamily: "Bebas Neue" }}
 					>
-						<MenuIcon />
-					</IconButton>
-					<Typography className={classes.title} variant="h5" noWrap>
 						JustPost8!
 					</Typography>
-					<IconButton aria-label="search" color="inherit">
-						<SearchIcon />
-					</IconButton>
-					<IconButton
-						aria-label="display more actions"
-						edge="end"
-						color="inherit"
+
+					<div
+						style={{
+							height: 128,
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "space-around",
+						}}
 					>
-						<MoreIcon />
-					</IconButton>
+						<Button>Login</Button>
+						<Button>Signup</Button>
+					</div>
 				</Toolbar>
 			</AppBar>
 		</div>

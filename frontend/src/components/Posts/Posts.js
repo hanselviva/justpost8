@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-	H5,
-	Card,
-	CardContent,
-	Body1,
-	CardAction,
-	Button,
-	Overline,
-} from "ui-neumorphism";
-import "ui-neumorphism/dist/index.css";
 import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostCard from "./PostCard";
+import CreatePost from "./CreatePost";
 
 const useStyles = makeStyles((theme) => ({
 	cardGrid: {
@@ -44,15 +35,13 @@ const Posts = () => {
 			});
 	}, []);
 
-	const convertDate = (timestamp) => {
-		return timestamp.substring(0, 10);
-	};
-
 	return (
 		<Container className={classes.cardGrid} maxWidth="lg">
+			<CreatePost />
+
 			<Grid container spacing={4}>
 				{posts.map((post) => {
-					return <PostCard post={post} />;
+					return <PostCard key={post.post_id} post={post} />;
 				})}
 			</Grid>
 		</Container>

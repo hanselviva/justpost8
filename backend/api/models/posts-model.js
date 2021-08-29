@@ -4,7 +4,7 @@ const db = require("../../data/config-db");
 const getAll = () => {
 	return db("posts as p")
 		.select("p.*", "u.username")
-		.join("users as u", "p.user_id", "users.user_id")
+		.join("users as u", "p.user_id", "u.user_id")
 		.orderBy("posted_at", "desc");
 };
 

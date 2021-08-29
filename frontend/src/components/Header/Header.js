@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
 	const history = useHistory();
 	const classes = useStyles();
-	const paramsLocation = history.location.pathname;
 
 	return (
 		<div className={classes.navbar}>

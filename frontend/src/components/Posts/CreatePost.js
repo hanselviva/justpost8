@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 //
 import { Divider, Button } from "ui-neumorphism";
 
@@ -41,7 +41,45 @@ const useStyles = makeStyles((theme) => ({
 
 const CreatePost = (props) => {
 	const classes = useStyles();
+	const [formValues, setFormValues] = useState({
+		post_title: "",
+		post_body: "",
+	});
 	const [open, setOpen] = useState(false);
+	const history = useHistory();
+	const [disabled, setDisabled] = useState(false);
+	const [redTitleDivider, setRedTitleDivider] = useState("");
+	const [redBodyDivider, setRedBodyDivider] = useState("");
+
+	//title limiter to 65 chars
+	useEffect(() => {
+		if (formValues.post_title.length > 65) {
+			setDisabled(true);
+			setRedTitleDivider("red");
+		} else {
+			setDisabled(false);
+			setRedTitleDivider("");
+		}
+	}, [formValues.post_title.length]);
+
+	//body limited to 420 chars
+	useEffect(() => {
+		if (formValues.post_body.length > 420) {
+			setDisabled(true);
+			setRedBodyDivider("red");
+		} else {
+			setDisabled(false);
+			setRedBodyDivider("");
+		}
+	}, [formValues.post_body.length]);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues({
+			...formValues,
+			[name]: value,
+		});
+	};
 
 	const handleClickOpen = (e) => {
 		e.preventDefault();
@@ -56,31 +94,48 @@ const CreatePost = (props) => {
 	};
 
 	return (
-		<Container component="main" maxWidth="md" className={classes.createPost}>
+		<Container component="main" maxWidth="sm" className={classes.createPost}>
 			<CssBaseline />
 			<div className={classes.paper}>
 				<form className={classes.form} noValidate>
 					<TextField
+						inputProps={{ style: { fontSize: 18 } }}
 						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
 						label="Title"
 						name="post_title"
+						onChange={handleChange}
+						value={formValues.post_title}
 					/>
-					<Divider elevated={true} />
+					<Divider
+						elevated={true}
+						style={{ backgroundColor: redTitleDivider }}
+					/>
 					<TextField
+						inputProps={{ style: { fontSize: 18 } }}
 						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
-						name="post_body"
-						label="What do you want to say?"
+						label="What do you want to say? (limit 420 characters)"
 						multiline={true}
-						rows={5}
+						rows={7}
+						name="post_body"
+						onChange={handleChange}
+						value={formValues.post_body}
 					/>
-					<Divider elevated={true} />
-					<Button bordered className={classes.submit} onClick={handleClickOpen}>
+					<Divider
+						elevated={true}
+						style={{ backgroundColor: redBodyDivider }}
+					/>
+					<Button
+						bordered
+						className={classes.submit}
+						onClick={handleClickOpen}
+						disabled={disabled}
+					>
 						<BorderColorOutlinedIcon style={{ marginRight: "10px" }} />
 						Post 8!
 					</Button>
@@ -97,15 +152,19 @@ const CreatePost = (props) => {
 				<DialogActions>
 					<Button
 						className={classes.dialogButton}
-						onClick={handleClose}
+						onClick={() => {
+							history.push("/login");
+						}}
 						color="primary"
 					>
 						Login
 					</Button>
 					<Button
 						className={classes.dialogButton}
-						onClick={handleClose}
-						color="primary"
+						onClick={() => {
+							history.push("/register");
+						}}
+						color="secondary"
 						autoFocus
 					>
 						Register

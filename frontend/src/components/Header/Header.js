@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: {
 		minHeight: 128,
-		alignItems: "flex-start",
 		paddingTop: theme.spacing(1),
 		paddingBottom: theme.spacing(2),
+		display: "flex",
+		justifyContent: "space-between",
 	},
 	title: {
-		flexGrow: 1,
 		cursor: "pointer",
 		display: "flex",
 	},

@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
+	avatar: {
+		height: "80px",
+		width: "80px",
+	},
 }));
 
 const PostCard = (props) => {
@@ -35,6 +39,11 @@ const PostCard = (props) => {
 			<Card bordered className={classes.card}>
 				<CardContent>
 					<H5 style={{ fontFamily: "Questrial" }}>{post.post_title}</H5>
+					<img
+						className={classes.avatar}
+						alt={post.username}
+						src={`https://robohash.org/${post.username}`}
+					/>
 					<Overline style={{ marginBottom: "12px" }}>
 						By {post.username}
 					</Overline>

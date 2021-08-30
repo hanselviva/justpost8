@@ -13,12 +13,13 @@ import Register from "./components/Register/Register";
 import Posts from "./components/Posts/Posts";
 import AdminPage from "./components/AdminPage/AdminPage";
 import Profile from "./components/Profile/Profile";
+import Loader from "./components/Loader/Loader";
 
 const App = (props) => {
 	return (
 		<div className="App">
 			<Header />
-			{props.isLoading === true && <h2> loading... </h2>}
+			{props.isLoading === true && <Loader />}
 			{props.dbError && <h2> {props.dbError}</h2>}
 			{props.dbAlert && <h2> {props.dbAlert}</h2>}
 			<div className="app-content">

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "space-between",
+		marginTop: theme.spacing(16),
 	},
 }));
 

@@ -19,7 +19,6 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 //neu import
 import { Button } from "ui-neumorphism";
 import "ui-neumorphism/dist/index.css";
-import { TrendingUpRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
@@ -111,7 +110,7 @@ const Header = (props) => {
 
 			<Drawer
 				className={classes.drawer}
-				variant="persistent"
+				// variant="persistent"
 				anchor="right"
 				open={open}
 				classes={{

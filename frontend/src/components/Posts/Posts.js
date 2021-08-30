@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { clearError } from "../../actions/index";
+
 import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostCard from "./PostCard";
 import CreatePost from "./CreatePost";
+import Loader from "../Loader/Loader";
 
 const useStyles = makeStyles((theme) => ({
 	cardGrid: {
@@ -17,11 +21,21 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
+	spinnerWrapper: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 }));
 
-const Posts = () => {
+const Posts = (props) => {
 	const [posts, setPosts] = useState([]);
 	const classes = useStyles();
+
+	useEffect(() => {
+		props.clearError();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [props.clearError]);
 
 	useEffect(() => {
 		axios
@@ -39,6 +53,8 @@ const Posts = () => {
 		<Container className={classes.cardGrid} maxWidth="lg">
 			<CreatePost />
 
+			{posts.length === 0 && <Loader />}
+
 			<Grid container spacing={4}>
 				{posts.map((post) => {
 					return <PostCard key={post.post_id} post={post} />;
@@ -48,4 +64,9 @@ const Posts = () => {
 	);
 };
 
-export default Posts;
+const mapStateToProps = (state) => ({
+	isLoading: state.isLoading,
+	isLoggedIn: state.isLoggedIn,
+	fetchError: state.fetchError,
+});
+export default connect(mapStateToProps, { clearError })(Posts);

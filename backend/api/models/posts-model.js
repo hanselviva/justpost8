@@ -13,7 +13,7 @@ const getBy = (filter) => {
 		.select("post_id", "post_title", "post_body", "posted_at", "username")
 		.join("users as u", "p.user_id", "u.user_id")
 		.where(filter)
-		.orderBy("posted_at", "desc");
+		.orderBy("post_id", "desc");
 };
 
 const getById = (post_id) => {
@@ -21,8 +21,8 @@ const getById = (post_id) => {
 };
 
 const add = async (newPost) => {
-	const [post_id] = await db("posts").insert(newPost);
-	const newlyAddedPost = await getById(post_id);
+	const [post_id] = await db("posts").returning("post_id").insert(newPost);
+	const newlyAddedPost = await getById(post_id[0]);
 	return newlyAddedPost;
 };
 

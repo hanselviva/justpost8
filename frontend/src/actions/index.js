@@ -20,7 +20,7 @@ export const register = (credentials, history) => (dispatch) => {
 				type: REGISTER,
 				payload: res.data,
 			});
-			history.push("/profile");
+			history.push("/login");
 		})
 		.catch((err) => {
 			dispatch({
@@ -44,7 +44,7 @@ export const login = (credentials, history) => (dispatch) => {
 				type: LOGIN,
 				payload: res.data.user,
 			});
-			history.push("/posts");
+			history.push("/profile");
 		})
 		.catch((err) => {
 			dispatch({

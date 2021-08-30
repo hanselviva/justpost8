@@ -48,6 +48,7 @@ const Profile = (props) => {
 			.catch((err) => {
 				console.log("fetching all posts err ", err.response.data.message);
 			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts]);
 
 	return (

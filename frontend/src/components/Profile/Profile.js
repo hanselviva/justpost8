@@ -49,7 +49,7 @@ const Profile = (props) => {
 			});
 	}, []);
 
-	//need to create onsubmit
+	//need to create onsubmit in redux
 
 	return (
 		<Container className={classes.cardGrid} maxWidth="lg">

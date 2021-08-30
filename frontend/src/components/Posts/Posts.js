@@ -42,12 +42,11 @@ const Posts = (props) => {
 			.get("https://justpost8-api.herokuapp.com/posts")
 			.then((res) => {
 				setPosts(res.data);
-				// console.log("posts", res.data);
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				console.log("fetching all posts err ", err.response.data.message);
 			});
-	}, []);
+	}, [props.isLoggedIn]);
 
 	return (
 		<Container className={classes.cardGrid} maxWidth="lg">

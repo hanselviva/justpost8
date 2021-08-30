@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { logout } from "../../actions/index";
 
 //
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		cursor: "pointer",
 		display: "flex",
+		//
 	},
 	hide: {
 		display: "none",
@@ -80,6 +82,10 @@ const Header = (props) => {
 		setOpen(false);
 	};
 
+	const handleClickAway = () => {
+		setOpen(false);
+	};
+
 	return (
 		<div className={classes.navbar}>
 			<AppBar position="static">
@@ -92,8 +98,9 @@ const Header = (props) => {
 						onClick={() => {
 							history.push("/");
 						}}
+						id="title"
 					>
-						JustPost8!
+						JustPost8
 					</Typography>
 
 					<IconButton
@@ -110,22 +117,23 @@ const Header = (props) => {
 
 			<Drawer
 				className={classes.drawer}
-				// variant="persistent"
 				anchor="right"
 				open={open}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
 			>
-				<div className={classes.drawerHeader}>
-					<IconButton onClick={handleDrawerClose}>
-						{theme.direction === "rtl" ? (
-							<ChevronLeftIcon />
-						) : (
-							<ChevronRightIcon />
-						)}
-					</IconButton>
-				</div>
+				<ClickAwayListener onClickAway={handleClickAway}>
+					<div className={classes.drawerHeader}>
+						<IconButton onClick={handleDrawerClose}>
+							{theme.direction === "rtl" ? (
+								<ChevronLeftIcon />
+							) : (
+								<ChevronRightIcon />
+							)}
+						</IconButton>
+					</div>
+				</ClickAwayListener>
 
 				<List className={classes.drawerMenu}>
 					{props.isLoggedIn === false && (
@@ -147,33 +155,38 @@ const Header = (props) => {
 
 					{props.isLoggedIn === true && (
 						<>
-							{["profile", "logout"].map((text, index) => (
-								<Button
-									bordered
-									key={index}
-									onClick={() => {
-										history.push(`/${text}`);
-									}}
-									className={classes.drawerButton}
-								>
-									{text}
-								</Button>
-							))}
+							<Button
+								bordered
+								onClick={() => {
+									history.push("/profile");
+								}}
+								className={classes.drawerButton}
+							>
+								Profile
+							</Button>
+							<Button
+								bordered
+								onClick={props.logout}
+								className={classes.drawerButton}
+							>
+								Logout
+							</Button>
 						</>
 					)}
 				</List>
+
 				<List
 					className={classes.drawerMenu}
 					style={{ marginTop: theme.spacing(4) }}
 				>
-					<Button
-						depressed
-						onClick={() => {
-							history.push(`/`);
-						}}
-						className={classes.drawerButton}
-					>
-						View code
+					<Button depressed className={classes.drawerButton}>
+						<a
+							href="https://github.com/hanselviva/justpost8"
+							rel="noreferrer noopener"
+							target="_blank"
+						>
+							View code
+						</a>
 					</Button>
 				</List>
 			</Drawer>
@@ -186,4 +199,4 @@ const mapStateToProps = (state) => ({
 	isLoggedIn: state.isLoggedIn,
 	fetchError: state.fetchError,
 });
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps, { logout })(Header);

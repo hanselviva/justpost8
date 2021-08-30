@@ -55,7 +55,6 @@ const Register = (props) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		props.register(formValues, history);
-		console.log("formValues:", formValues);
 	};
 
 	return (

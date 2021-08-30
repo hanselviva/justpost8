@@ -4,13 +4,8 @@ import {
 	LOGIN,
 	START_FETCHING,
 	FETCHING_USER_SUCCESS,
-	FETCHING_POSTS_SUCCESS,
-	CREATE_POST_SUCCESS,
-	UPDATE_POST_SUCCESS,
-	DELETE_POST_SUCCESS,
 	LOGOUT,
 	FETCH_ERROR,
-	FETCH_ALERT,
 	CLEAR_ERROR,
 } from "../actions";
 
@@ -19,7 +14,6 @@ export const initialState = {
 	isLoggedIn: false,
 	user: null,
 	dbError: null,
-	dbAlert: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -50,42 +44,8 @@ export const reducer = (state = initialState, action) => {
 				isLoading: false,
 				dbError: null,
 			};
-		case FETCHING_POSTS_SUCCESS:
-			return {
-				...state,
-				posts: action.payload,
-				isLoading: false,
-				dbError: null,
-			};
-		case CREATE_POST_SUCCESS:
-			return {
-				...state,
-				user: action.payload,
-				isLoading: false,
-				dbError: null,
-			};
-		case UPDATE_POST_SUCCESS:
-			return {
-				...state,
-				user: action.payload,
-				isLoading: false,
-				dbError: null,
-			};
-		case DELETE_POST_SUCCESS:
-			return {
-				...state,
-				user: action.payload,
-				isLoading: false,
-				dbError: null,
-			};
 		case LOGOUT:
 			return initialState;
-		case FETCH_ALERT:
-			return {
-				...state,
-				dbAlert: action.payload,
-				isLoading: false,
-			};
 		case FETCH_ERROR:
 			return {
 				...state,

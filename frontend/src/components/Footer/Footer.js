@@ -20,9 +20,10 @@ const Footer = () => {
 		<Card bordered className={classes.card}>
 			<CardContent>
 				<H6 style={{ fontFamily: "Bebas Neue" }}>JustPost8</H6>
-				<Body2>Developed by Hansel Valentine</Body2>
+				<Body2>By Hansel Valentine</Body2>
+				<Overline>Using React, Redux, MUI and UI-Neumorphism</Overline>
 				<Overline style={{ marginBottom: "12px" }}>
-					With React, Redux, MUI and UI-Neumorphism
+					Node, Express, Knex, PostgreSQL
 				</Overline>
 			</CardContent>
 		</Card>

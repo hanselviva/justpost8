@@ -44,6 +44,11 @@ const Login = (props) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.clearError]);
 
+	useEffect(() => {
+		console.log("USER STATE:", props.user);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({
@@ -60,6 +65,7 @@ const Login = (props) => {
 	return (
 		<Container component="main" maxWidth="sm" className={classes.createPost}>
 			<CssBaseline />
+			{props.user?.length && <h2> user created. please login </h2>}
 			<div className={classes.paper}>
 				<form className={classes.form} noValidate onSubmit={handleSubmit}>
 					<TextField
@@ -85,7 +91,7 @@ const Login = (props) => {
 						onChange={handleChange}
 					/>
 					<Divider elevated={true} />
-					<Button bordered className={classes.submit}>
+					<Button bordered className={classes.submit} onClick={handleSubmit}>
 						<VpnKeyOutlinedIcon style={{ marginRight: "10px" }} />
 						Login
 					</Button>

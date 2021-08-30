@@ -7,10 +7,9 @@ import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostCard from "../Posts/PostCard";
 import CreatePost from "../Posts/CreatePost";
-import Loader from "../Loader/Loader";
 
 const useStyles = makeStyles((theme) => ({
-	cardGrid: {
+	container: {
 		paddingTop: theme.spacing(8),
 		paddingBottom: theme.spacing(8),
 	},
@@ -38,24 +37,30 @@ const Profile = (props) => {
 	}, [props.clearError]);
 
 	useEffect(() => {
+		console.log("USER PROPS:", props.user);
 		axios
-			.get("https://justpost8-api.herokuapp.com/posts") //no endpoint for all posts by user yet
+			.get(
+				`https://justpost8-api.herokuapp.com/auth/users/${props.user?.user_id}/posts`,
+			) //no endpoint for all posts by user yet
 			.then((res) => {
 				setPosts(res.data);
-				// console.log("posts", res.data);
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				console.log("fetching all posts err ", err.response.data.message);
 			});
-	}, []);
-
-	//need to create onsubmit in redux
+	}, [posts]);
 
 	return (
-		<Container className={classes.cardGrid} maxWidth="lg">
+		<Container className={classes.container} maxWidth="lg">
+			<img
+				className={classes.avatar}
+				alt={props.user?.username}
+				src={`https://robohash.org/${props.user?.username}`}
+			/>
+
 			<CreatePost />
 
-			{posts.length === 0 && <Loader />}
+			{!posts && <h1> you have no posts</h1>}
 
 			<Grid container spacing={4}>
 				{posts.map((post) => {

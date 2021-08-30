@@ -21,13 +21,12 @@ const App = (props) => {
 			<Header />
 			{props.isLoading === true && <Loader />}
 			{props.dbError && <h2> {props.dbError}</h2>}
-			{props.dbAlert && <h2> {props.dbAlert}</h2>}
 			<div className="app-content">
 				<Switch>
 					<Route exact path="/" component={Posts} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
-					<Route path="/posts" component={Posts} />
+					<PrivateRoute path="/posts" component={Posts} />
 					<PrivateRoute path="/profile" component={Profile} />
 					<Route path="/adminPage" component={AdminPage} />
 				</Switch>
@@ -42,7 +41,6 @@ const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
 	dbError: state.dbError,
-	dbAlert: state.dbAlert,
 });
 
 export default connect(mapStateToProps, {})(App);

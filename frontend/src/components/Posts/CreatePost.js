@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 //
 import { Divider, Button } from "ui-neumorphism";
 
@@ -85,6 +86,17 @@ const CreatePost = (props) => {
 		e.preventDefault();
 		if (props.isLoggedIn === false) {
 			setOpen(true);
+		} else {
+			const postValues = {
+				...formValues,
+				user_id: props.user?.user_id,
+			};
+			axios
+				.post(`https://justpost8-api.herokuapp.com/posts/create`, postValues)
+				.then(window.location.reload())
+				.catch((err) =>
+					console.log("create post err:", err.response.data.message),
+				);
 		}
 		//need to add else if user if logged in
 	};
@@ -151,20 +163,20 @@ const CreatePost = (props) => {
 				</DialogContent>
 				<DialogActions>
 					<Button
+						color="var(--primary)"
 						className={classes.dialogButton}
 						onClick={() => {
 							history.push("/login");
 						}}
-						color="primary"
 					>
 						Login
 					</Button>
 					<Button
+						color="var(--primary)"
 						className={classes.dialogButton}
 						onClick={() => {
 							history.push("/register");
 						}}
-						color="secondary"
 						autoFocus
 					>
 						Register
@@ -178,6 +190,7 @@ const CreatePost = (props) => {
 const mapStateToProps = (state) => ({
 	isLoading: state.isLoading,
 	isLoggedIn: state.isLoggedIn,
+	user: state.user,
 });
 
 export default connect(mapStateToProps, {})(CreatePost);

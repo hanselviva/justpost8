@@ -76,7 +76,7 @@ router.get("/users/:id/posts", validateId, async (req, res, next) => {
 	const { id } = req.params;
 	const grabUser = await Users.getById(id).returning("user_id");
 	Posts.getBy({ "p.user_id": grabUser[0].user_id })
-		.then((response) => res.status(200).res.json(response))
+		.then((response) => res.status(200).json(response))
 		.catch(next);
 });
 

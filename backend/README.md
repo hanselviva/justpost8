@@ -48,6 +48,10 @@ returns: `{ "post_id": 4, "post_title": "Hello World!", "post_body": "Im alive!!
 
 `[GET] https://justpost8-api.herokuapp.com/posts/:post_id`
 
+## get all posts by user with user_id
+
+`[GET] https://justpost8-api.herokuapp.com/auth/users/:id/posts`
+
 ## edit/update a post by post_id
 
 `[PUT] https://justpost8-api.herokuapp.com/posts/:post_id`

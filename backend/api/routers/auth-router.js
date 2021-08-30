@@ -2,6 +2,7 @@
 
 const router = require("express").Router();
 const Users = require("../models/users-model");
+const Posts = require("../models/posts-model");
 const bcrypt = require("bcryptjs");
 const tokenBuilder = require("../utils/token-builder");
 
@@ -69,6 +70,15 @@ router.post(
 			});
 	},
 );
+
+//get all posts by user
+router.get("/users/:id/posts", validateId, async (req, res, next) => {
+	const { id } = req.params;
+	const grabUser = await Users.getById(id).returning("user_id");
+	Posts.getBy({ "p.user_id": grabUser[0].user_id })
+		.then((response) => res.status(200).res.json(response))
+		.catch(next);
+});
 
 router.get("/users/:id", validateId, (req, res, next) => {
 	const { id } = req.params;

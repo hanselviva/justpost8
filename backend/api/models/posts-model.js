@@ -8,10 +8,9 @@ const getAll = () => {
 		.orderBy("posted_at", "desc");
 };
 
-//get posts by user with user_id as filter
 const getBy = (filter) => {
 	return db("posts as p")
-		.select("post_id", "post_title", "post_body", "post_at", "username")
+		.select("post_id", "post_title", "post_body", "posted_at", "username")
 		.join("users as u", "p.user_id", "u.user_id")
 		.where(filter)
 		.orderBy("posted_at", "desc");

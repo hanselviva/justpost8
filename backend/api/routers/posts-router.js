@@ -5,6 +5,7 @@ const Posts = require("../models/posts-model");
 const Middleware = require("../middlewares/posts-middleware");
 const { restricted } = require("../middlewares/auth-middleware");
 
+//get all posts
 router.get("/", (req, res, next) => {
 	Posts.getAll()
 		.then((posts) => {
@@ -13,6 +14,7 @@ router.get("/", (req, res, next) => {
 		.catch(next);
 });
 
+// get post by post id
 router.get("/:id", Middleware.validateId, (req, res, next) => {
 	const { id } = req.params;
 	Posts.getById(id)

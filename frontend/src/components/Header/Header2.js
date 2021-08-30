@@ -5,20 +5,27 @@ import { connect } from "react-redux";
 //
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
 
 //neu import
 import { Button } from "ui-neumorphism";
 import "ui-neumorphism/dist/index.css";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
@@ -26,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	toolbar: {
 		minHeight: 128,
-		alignItems: "flex-start",
+		alignItems: "center",
+		justifyContent: "center",
 		paddingTop: theme.spacing(1),
 		paddingBottom: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
-		cursor: "pointer",
-		display: "flex",
+		alignSelf: "flex-end",
 	},
 	hide: {
 		display: "none",
@@ -53,20 +60,9 @@ const useStyles = makeStyles((theme) => ({
 		...theme.mixins.toolbar,
 		justifyContent: "flex-start",
 	},
-	drawerMenu: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		marginTop: theme.spacing(8),
-	},
-	drawerButton: {
-		margin: theme.spacing(1),
-	},
 }));
 
-const drawerWidth = 240;
-
-const Header = (props) => {
+const Header2 = (props) => {
 	const history = useHistory();
 	const classes = useStyles();
 	const theme = useTheme();
@@ -83,15 +79,12 @@ const Header = (props) => {
 	return (
 		<div className={classes.navbar}>
 			<AppBar position="static">
-				<Toolbar className={classes.toolbar}>
+				<Toolbar className={classes.toolbar} position="fixed">
 					<Typography
 						className={classes.title}
 						variant="h1"
 						noWrap
 						style={{ fontFamily: "Bebas Neue" }}
-						onClick={() => {
-							history.push("/");
-						}}
 					>
 						JustPost8!
 					</Typography>
@@ -105,6 +98,35 @@ const Header = (props) => {
 					>
 						<MenuIcon />
 					</IconButton>
+
+					{/* <div
+						style={{
+							height: 128,
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "space-around",
+						}}
+					>
+						{props.isLoggedIn === false && (
+							<>
+								<Button
+									onClick={() => {
+										history.push("/register");
+									}}
+								>
+									Signup
+								</Button>
+								<Button
+									onClick={() => {
+										history.push("/login");
+									}}
+								>
+									Login
+								</Button>{" "}
+							</>
+						)}
+					</div> */}
 				</Toolbar>
 			</AppBar>
 
@@ -126,37 +148,27 @@ const Header = (props) => {
 						)}
 					</IconButton>
 				</div>
-
-				<List className={classes.drawerMenu}>
-					{props.isLoggedIn === false && (
-						<>
-							{["login", "register"].map((text, index) => (
-								<Button
-									bordered
-									onClick={() => {
-										history.push(`/${text}`);
-									}}
-									className={classes.drawerButton}
-								>
-									{text}
-								</Button>
-							))}
-						</>
-					)}
+				<Divider />
+				<List>
+					{["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+						<ListItem button key={text}>
+							<ListItemIcon>
+								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+							</ListItemIcon>
+							<ListItemText primary={text} />
+						</ListItem>
+					))}
 				</List>
-				<List
-					className={classes.drawerMenu}
-					style={{ marginTop: theme.spacing(4) }}
-				>
-					<Button
-						depressed
-						onClick={() => {
-							history.push(`/`);
-						}}
-						className={classes.drawerButton}
-					>
-						View code
-					</Button>
+				<Divider />
+				<List>
+					{["All mail", "Trash", "Spam"].map((text, index) => (
+						<ListItem button key={text}>
+							<ListItemIcon>
+								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+							</ListItemIcon>
+							<ListItemText primary={text} />
+						</ListItem>
+					))}
 				</List>
 			</Drawer>
 		</div>
@@ -168,4 +180,4 @@ const mapStateToProps = (state) => ({
 	isLoggedIn: state.isLoggedIn,
 	fetchError: state.fetchError,
 });
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps, {})(Header2);

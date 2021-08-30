@@ -19,6 +19,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 //neu import
 import { Button } from "ui-neumorphism";
 import "ui-neumorphism/dist/index.css";
+import { TrendingUpRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
@@ -133,6 +134,24 @@ const Header = (props) => {
 							{["login", "register"].map((text, index) => (
 								<Button
 									bordered
+									key={index}
+									onClick={() => {
+										history.push(`/${text}`);
+									}}
+									className={classes.drawerButton}
+								>
+									{text}
+								</Button>
+							))}
+						</>
+					)}
+
+					{props.isLoggedIn === true && (
+						<>
+							{["profile", "logout"].map((text, index) => (
+								<Button
+									bordered
+									key={index}
 									onClick={() => {
 										history.push(`/${text}`);
 									}}

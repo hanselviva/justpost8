@@ -95,6 +95,9 @@ const Login = (props) => {
 						<VpnKeyOutlinedIcon style={{ marginRight: "10px" }} />
 						Login
 					</Button>
+					<p>
+						No account yet? <a href="/register"> Register</a>.
+					</p>
 				</form>
 			</div>
 		</Container>

@@ -12,6 +12,7 @@ import {
 export const initialState = {
 	isLoading: false,
 	isLoggedIn: false,
+	user: null,
 	dbError: null,
 };
 
@@ -20,6 +21,7 @@ export const reducer = (state = initialState, action) => {
 		case REGISTER: //done
 			return {
 				...state,
+				user: action.payload,
 				isLoading: false,
 			};
 		case LOGIN:
@@ -27,6 +29,7 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				isLoggedIn: true,
 				isLoading: false,
+				user: action.payload,
 				dbError: null,
 			};
 		case START_FETCHING:
@@ -37,6 +40,7 @@ export const reducer = (state = initialState, action) => {
 		case FETCHING_USER_SUCCESS:
 			return {
 				...state,
+				user: action.payload,
 				isLoggedIn: true,
 				isLoading: false,
 				dbError: null,

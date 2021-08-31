@@ -18,9 +18,9 @@ export const register = (credentials, history) => (dispatch) => {
 			console.log("register post response:", res);
 			dispatch({
 				type: REGISTER,
-				// payload: res.data,
+				payload: res.data,
 			});
-			history.push("/login");
+			// history.push("/profile");
 		})
 		.catch((err) => {
 			dispatch({
@@ -42,7 +42,7 @@ export const login = (credentials, history) => (dispatch) => {
 			localStorage.setItem("user_id", res.data.user.user_id);
 			dispatch({
 				type: LOGIN,
-				// payload: res.data,
+				payload: res.data.user,
 			});
 			history.push("/profile");
 		})
@@ -62,9 +62,10 @@ export const getUser = (id) => (dispatch) => {
 	axiosWithAuth()
 		.get(`https://justpost8-api.herokuapp.com/auth/users/${id}`)
 		.then((res) => {
+			console.log("getUser response", res.data);
 			dispatch({
 				type: FETCHING_USER_SUCCESS,
-				// payload: res.data,
+				payload: res.data[0],
 			});
 		})
 		.catch((error) => {

@@ -43,27 +43,28 @@ const Profile = (props) => {
 				`https://justpost8-api.herokuapp.com/auth/users/${localStorage.getItem(
 					"user_id",
 				)}/posts`,
-			) //no endpoint for all posts by user yet
+			)
 			.then((res) => {
 				setPosts(res.data);
+				console.log("fetch all user posts", res.data);
 			})
 			.catch((err) => {
-				console.log("fetching all posts err ", err.response.data.message);
+				console.log("fetching user posts error ", err.response.data.message);
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.getUser]);
+	}, []);
 
 	return (
 		<Container className={classes.container} maxWidth="lg">
 			<img
 				className={classes.avatar}
 				alt={props.user?.username}
-				src={`https://robohash.org/${localStorage.getItem("user_id")}`}
+				src={`https://robohash.org/${props.user?.username}`}
 			/>
 
 			<CreatePost />
 
-			{!posts && <h1> you have no posts</h1>}
+			{Object.keys(posts).length === 0 && <h1> you have no posts</h1>}
 
 			<Grid container spacing={4}>
 				{posts.map((post) => {

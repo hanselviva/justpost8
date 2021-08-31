@@ -9,7 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import LockIcon from "@material-ui/icons/Lock";
 import { Divider, Button } from "ui-neumorphism";
 
 const useStyles = makeStyles((theme) => ({
@@ -86,9 +86,12 @@ const Register = (props) => {
 					/>
 					<Divider elevated={true} />
 					<Button bordered className={classes.submit}>
-						<VpnKeyOutlinedIcon style={{ marginRight: "10px" }} />
+						<LockIcon style={{ marginRight: "10px" }} />
 						Register
 					</Button>
+					<p>
+						Already have an account? <a href="/login"> Login</a>.
+					</p>
 				</form>
 			</div>
 		</Container>

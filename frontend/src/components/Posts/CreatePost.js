@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 //
 import { Divider, Button } from "ui-neumorphism";
@@ -101,7 +100,6 @@ const CreatePost = (props) => {
 					console.log("create post err:", err.response.data.message),
 				);
 		}
-		//need to add else if user if logged in
 	};
 
 	const handleClose = () => {

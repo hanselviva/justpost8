@@ -14,6 +14,7 @@ import Posts from "./components/Posts/Posts";
 import AdminPage from "./components/AdminPage/AdminPage";
 import Profile from "./components/Profile/Profile";
 import Loader from "./components/Loader/Loader";
+import { getUser } from "./actions";
 
 const App = (props) => {
 	return (
@@ -43,4 +44,4 @@ const mapStateToProps = (state) => ({
 	dbError: state.dbError,
 });
 
-export default connect(mapStateToProps, {})(App);
+export default connect(mapStateToProps, { getUser })(App);

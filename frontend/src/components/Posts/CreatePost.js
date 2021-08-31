@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import axiosWithAuth from "../../utils/axiosWithAuth";
 //
 import { Divider, Button } from "ui-neumorphism";
 
@@ -89,11 +90,13 @@ const CreatePost = (props) => {
 		} else {
 			const postValues = {
 				...formValues,
-				user_id: props.user?.user_id,
+				user_id: localStorage.getItem("user_id"),
 			};
-			axios
-				.post(`https://justpost8-api.herokuapp.com/posts/create`, postValues)
-				.then(window.location.reload())
+			axiosWithAuth()
+				.post("https://justpost8-api.herokuapp.com/posts/create", postValues)
+				.then((res) => {
+					window.location.reload();
+				})
 				.catch((err) =>
 					console.log("create post err:", err.response.data.message),
 				);

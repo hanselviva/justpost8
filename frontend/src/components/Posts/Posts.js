@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { clearError } from "../../actions/index";
+import { clearError, getUser } from "../../actions/index";
 
 import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,6 +38,10 @@ const Posts = (props) => {
 	}, [props.clearError]);
 
 	useEffect(() => {
+		const loggedIn = localStorage.getItem("user_id");
+		if (loggedIn) {
+			props.getUser(loggedIn);
+		}
 		axios
 			.get("https://justpost8-api.herokuapp.com/posts")
 			.then((res) => {
@@ -46,7 +50,8 @@ const Posts = (props) => {
 			.catch((err) => {
 				console.log("fetching all posts err ", err.response.data.message);
 			});
-	}, [props.isLoggedIn]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<Container className={classes.cardGrid} maxWidth="lg">
@@ -68,4 +73,4 @@ const mapStateToProps = (state) => ({
 	isLoggedIn: state.isLoggedIn,
 	fetchError: state.fetchError,
 });
-export default connect(mapStateToProps, { clearError })(Posts);
+export default connect(mapStateToProps, { clearError, getUser })(Posts);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { clearError } from "../../actions/index";
+import { clearError, getUser } from "../../actions/index";
 
 import { Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -37,10 +37,12 @@ const Profile = (props) => {
 	}, [props.clearError]);
 
 	useEffect(() => {
-		console.log("USER PROPS:", props.user);
+		props.getUser(localStorage.getItem("user_id"));
 		axios
 			.get(
-				`https://justpost8-api.herokuapp.com/auth/users/${props.user?.user_id}/posts`,
+				`https://justpost8-api.herokuapp.com/auth/users/${localStorage.getItem(
+					"user_id",
+				)}/posts`,
 			) //no endpoint for all posts by user yet
 			.then((res) => {
 				setPosts(res.data);
@@ -49,14 +51,14 @@ const Profile = (props) => {
 				console.log("fetching all posts err ", err.response.data.message);
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [posts]);
+	}, [props.getUser]);
 
 	return (
 		<Container className={classes.container} maxWidth="lg">
 			<img
 				className={classes.avatar}
 				alt={props.user?.username}
-				src={`https://robohash.org/${props.user?.username}`}
+				src={`https://robohash.org/${localStorage.getItem("user_id")}`}
 			/>
 
 			<CreatePost />
@@ -78,4 +80,4 @@ const mapStateToProps = (state) => ({
 	fetchError: state.fetchError,
 	user: state.user,
 });
-export default connect(mapStateToProps, { clearError })(Profile);
+export default connect(mapStateToProps, { getUser, clearError })(Profile);

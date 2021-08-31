@@ -5,12 +5,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 	return (
 		<Route
 			{...rest}
-			render={(props) => {
-				if (localStorage.getItem("token")) {
-					return <Component {...props} />;
-				} else {
+			render={() => {
+				if (localStorage.getItem("token") === null) {
 					return <Redirect to="/" />;
 				}
+				return <Component {...rest} />;
 			}}
 		/>
 	);
